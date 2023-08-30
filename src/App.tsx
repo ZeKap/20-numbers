@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { useCookies } from 'react-cookie';
 
 /**
  *
@@ -49,11 +50,14 @@ function canPlaceNumber(numbers: number[], numberToPlace: number): boolean {
 }
 
 function App() {
-  var [numbers, setNumbers] = React.useState(Array(20).fill(null));
-  var [nextNumber, setNextNumber] = React.useState(getRandomInt(1000));
-  var [displayAlredyUsed, setDisplayAlreadyUsed] = React.useState(false);
-  var [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
-  var [displayCanNotPlace, setDisplayCanNotPlace] = React.useState(false);
+  const [numbers, setNumbers] = React.useState(Array(20).fill(null));
+  const [nextNumber, setNextNumber] = React.useState(getRandomInt(1000));
+  const [displayAlredyUsed, setDisplayAlreadyUsed] = React.useState(false);
+  const [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
+  const [displayCanNotPlace, setDisplayCanNotPlace] = React.useState(false);
+  const [score, setScore] = React.useState(0);
+  const [cookies, setCookie, _removeCookie] = useCookies(['bestScore']);
+  const [bestScore, setBestScore] = React.useState(cookies['bestScore'] || 0);
 
   /**
    * Generate a new random number, and check if it can be placed in the list
@@ -75,10 +79,15 @@ function App() {
    * Will restart the game
    */
   function restart(): void {
+    if(score > bestScore) {
+      setBestScore(score);
+      setCookie('bestScore', score);
+    }
+    setNumbers(Array(20).fill(null));
     setDisplayAlreadyUsed(false);
     setDisplayIsNotSorted(false);
     setDisplayCanNotPlace(false);
-    setNumbers(Array(20).fill(null));
+    setScore(0);
     generateNewNumber(Array(20).fill(null));
   }
 
@@ -87,7 +96,8 @@ function App() {
    * - check if the case clicked is already used
    * - check if the list is sorted before placing the number
    * - place the number in the list
-   * - get a new random number
+   * - increase the score
+   * - generate a new random number
    * @param index index of the case clicked
    * @returns
    */
@@ -118,6 +128,9 @@ function App() {
     });
     setNumbers(n);
 
+    // increase the score
+    setScore(score + 1);
+
     // get a new random number
     generateNewNumber(n);
   }
@@ -132,6 +145,16 @@ function App() {
       <p>
         WARNING! Once the place for the number is chosen, you can't move it.
       </p>
+
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "20px",
+        margin: "auto"
+      }}>
+        <h3>Score: {score}</h3>
+        {bestScore !== 0 && <h3>Best score: {bestScore}</h3>}
+      </div>
 
       <h2>Number: {nextNumber}</h2>
 
