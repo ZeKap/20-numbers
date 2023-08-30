@@ -56,7 +56,7 @@ function App() {
   const [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
   const [displayCanNotPlace, setDisplayCanNotPlace] = React.useState(false);
   const [score, setScore] = React.useState(0);
-  const [cookies, setCookie, _removeCookie] = useCookies(['bestScore']);
+  const [cookies, setCookie] = useCookies(['bestScore']);
   const [bestScore, setBestScore] = React.useState(cookies['bestScore'] || 0);
 
   /**
