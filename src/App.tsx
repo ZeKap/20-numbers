@@ -55,13 +55,31 @@ function App() {
   var [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
   var [displayCanNotPlace, setDisplayCanNotPlace] = React.useState(false);
 
+  /**
+   * Generate a new random number, and check if it can be placed in the list
+   * @param ns list of numbers
+   */
   function generateNewNumber(ns: number[]): void {
-    let n = getRandomInt(1000);
+    let n;
+    do {
+      n = getRandomInt(1000);
+    } while (ns.includes(n));
     setNextNumber(n);
     if (!canPlaceNumber(ns, n)) {
       setDisplayCanNotPlace(true);
       return;
     } else setDisplayCanNotPlace(false);
+  }
+
+  /**
+   * Will restart the game
+   */
+  function restart(): void {
+    setDisplayAlreadyUsed(false);
+    setDisplayIsNotSorted(false);
+    setDisplayCanNotPlace(false);
+    setNumbers(Array(20).fill(null));
+    generateNewNumber(Array(20).fill(null));
   }
 
   /**
@@ -121,7 +139,7 @@ function App() {
         {numbers.map((number, index) => (
           <div
             key={index}
-            className="number"
+            className={number !== null ? 'number number_used' : 'number'}
             id={index.toString()}
             onClick={() => handleCaseClick(index)}
           >
@@ -141,9 +159,14 @@ function App() {
       )}
 
       {displayCanNotPlace && (
-        <p style={{ color: "red" }}>
-          The number can't be placed in the list... You lost!
-        </p>
+        <>
+          <p style={{ color: "red" }}>
+            The number can't be placed in the list... You lost!
+          </p>
+          <button onClick={restart} className="restart_button">
+            Restart the game
+          </button>
+        </>
       )}
     </>
   );

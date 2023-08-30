@@ -7,6 +7,7 @@ body {
   padding: 4rem;
 }
 
+
 .numbers {
   display: flex;
   flex-direction: row;
@@ -19,11 +20,23 @@ body {
   width: 3rem;
   height: 3rem;
   border: solid 1px grey;
-  border-radius: 4px;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .number:hover {
   background-color: #f0f0f0;
+}
+.number_used {
+  background-color: #f0f0f0;
+  border: solid 1px #f0f0f0;
+}
+
+.restart_button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: solid 0.1rem hsl(220, 10%, 70%);
+  background-color: hsl(220, 10%, 95%);
+  cursor: pointer;
 }
