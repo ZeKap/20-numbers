@@ -1,10 +1,20 @@
 import React from "react";
 import "./App.css";
 
+/**
+ * 
+ * @param max max number to get
+ * @returns a new random number between 0 and max, as an integer
+ */
 function getRandomInt(max: number): number {
   return Math.floor(Math.random() * max);
 }
 
+/**
+ * 
+ * @param numbers list of number to check
+ * @returns true if the list is sorted, false otherwise
+ */
 function isSorted(numbers: number[]): boolean {
   let sorted = true;
   let lastNumber = numbers[0];
@@ -25,14 +35,25 @@ function App() {
   var [displayAlredyUsed, setDisplayAlreadyUsed] = React.useState(false);
   var [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
 
+  /**
+   * Will do the following:
+   * - check if the case clicked is already used
+   * - check if the list is sorted before placing the number
+   * - place the number in the list
+   * - get a new random number
+   * @param index index of the case clicked
+   * @returns 
+   */
   function handleCaseClick(index: number) {
     console.log(numbers);
 
+    // check if the case is already used
     if (numbers[index] !== null) {
       setDisplayAlreadyUsed(true);
       return;
     } else setDisplayAlreadyUsed(false);
 
+    // check if the list is sorted before placing the number
     let newNumbers = numbers.map((number) => number);
     newNumbers[index] = nextNumber;
     if (!isSorted(newNumbers)) {
@@ -40,6 +61,7 @@ function App() {
       return;
     } else setDisplayIsNotSorted(false);
 
+    // place the number in the list
     setNumbers(
       numbers.map((number, i) => {
         if (i === index) {
@@ -49,6 +71,8 @@ function App() {
         }
       })
     );
+
+    // get a new random number
     setNextNumber(getRandomInt(1000));
   }
 
