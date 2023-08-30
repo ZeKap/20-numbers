@@ -20,6 +20,9 @@ body {
   height: 3rem;
   border: solid 1px grey;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .number:hover {
   background-color: #f0f0f0;
