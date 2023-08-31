@@ -45,9 +45,10 @@ h2 > * {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.1s ease-in-out;
 }
-.number:hover {
-  background-color: #f0f0f0;
+.number:not(.number_used):hover {
+  background-color: #f0f0f0 !important;
 }
 .number_used {
   background-color: #f0f0f0;
