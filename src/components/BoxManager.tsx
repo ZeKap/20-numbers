@@ -36,15 +36,25 @@ export default function BoxManager({
   incrementScore,
   setNextNumber,
   restartGame,
-  numberOfBoxes,
+  NUMBER_OF_BOXES,
+  NUMBER_MIN,
+  NUMBER_MAX,
+  HUE_MIN,
+  HUE_MAX,
 }: {
   nextNumber: number;
   incrementScore: CallableFunction;
   setNextNumber: CallableFunction;
   restartGame: CallableFunction;
-  numberOfBoxes: number;
+  NUMBER_OF_BOXES: number;
+  NUMBER_MIN: number;
+  NUMBER_MAX: number;
+  HUE_MIN: number;
+  HUE_MAX: number;
 }): React.ReactElement {
-  const [numbers, setNumbers] = React.useState(Array(numberOfBoxes).fill(null));
+  const [numbers, setNumbers] = React.useState(
+    Array(NUMBER_OF_BOXES).fill(null)
+  );
   const [displayAlredyUsed, setDisplayAlreadyUsed] = React.useState(false);
   const [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
   const [displayCanNotPlace, setDisplayCanNotPlace] = React.useState(false);
@@ -52,13 +62,13 @@ export default function BoxManager({
   // TODO
   /**
    *
-   * @param ns 
-   * @returns 
+   * @param ns
+   * @returns
    */
   function generateNewNumber(ns: number[]): void {
     let n;
     do {
-      n = getRandomInt(1000);
+      n = getRandomInt(NUMBER_MIN, NUMBER_MAX);
     } while (ns.includes(n));
     setNextNumber(n);
     if (!canPlaceNumber(ns, n)) {
@@ -69,9 +79,9 @@ export default function BoxManager({
 
   // TODO
   /**
-   * 
-   * @param index 
-   * @returns 
+   *
+   * @param index
+   * @returns
    */
   function handleCaseClick(index: number) {
     if (displayCanNotPlace) return;
@@ -109,14 +119,14 @@ export default function BoxManager({
 
   // TODO
   /**
-   * 
+   *
    */
   function restart() {
-    setNumbers(Array(numberOfBoxes).fill(null));
+    setNumbers(Array(NUMBER_OF_BOXES).fill(null));
     setDisplayAlreadyUsed(false);
     setDisplayCanNotPlace(false);
     setDisplayIsNotSorted(false);
-    setNextNumber(getRandomInt(1000));
+    setNextNumber(getRandomInt(NUMBER_MIN, NUMBER_MAX));
     restartGame();
   }
 
@@ -129,6 +139,10 @@ export default function BoxManager({
             boxValue={number}
             index={index}
             handleCaseClick={handleCaseClick}
+            numberMin={NUMBER_MIN}
+            numberMax={NUMBER_MAX}
+            hueMin={HUE_MIN}
+            hueMax={HUE_MAX}
           ></Box>
         ))}
       </div>

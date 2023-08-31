@@ -1,11 +1,13 @@
+import { Property } from "csstype";
+
 // TODO
 /**
  *
  * @param max max number to get
  * @returns a new random number between 0 and max, as an integer
  */
-export function getRandomInt(max: number): number {
-  return Math.floor(Math.random() * max + 1);
+export function getRandomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * max + min);
 }
 
 // TODO
@@ -47,4 +49,19 @@ export function canPlaceNumber(
     }
   });
   return canPlace;
+}
+
+export function calcColor(
+  number: number,
+  hueMin: number,
+  hueMax: number,
+  numberMin: number = 1,
+  numberMax: number = 1000
+): Property.BackgroundColor {
+  if (number === null) return "white";
+
+  let absoluteNumber = number - numberMin;
+  let absoluteNumberMax = numberMax - numberMin;
+  let hue = (absoluteNumber / absoluteNumberMax) * (hueMax - hueMin) + hueMin;
+  return `hsl(${hue}, 100%, 60%)`;
 }

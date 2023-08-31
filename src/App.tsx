@@ -3,9 +3,18 @@ import "./App.css";
 import { useCookies } from "react-cookie";
 import { getRandomInt } from "./utils/utils";
 import BoxManager from "./components/BoxManager";
+import { calcColor } from "./utils/utils";
 
 function App() {
-  const [nextNumber, setNextNumber] = React.useState(getRandomInt(1000));
+  const BOXES: number = 20;
+  const NUMBER_MIN: number = 1;
+  const NUMBER_MAX: number = 1000;
+  const HUE_MIN: number = 110;
+  const HUE_MAX: number = 0;
+
+  const [nextNumber, setNextNumber] = React.useState(
+    getRandomInt(NUMBER_MIN, NUMBER_MAX)
+  );
   const [score, setScore] = React.useState(0);
   const [cookies, setCookie] = useCookies(["bestScore"]);
   const [bestScore, setBestScore] = React.useState(cookies["bestScore"] || 0);
@@ -44,15 +53,27 @@ function App() {
         {bestScore !== 0 && <h3>Best score: {bestScore}</h3>}
       </div>
 
-      <h2>Number: {nextNumber}</h2>
+      <h2>Number:<div style={{
+        backgroundColor: calcColor(
+          nextNumber,
+          HUE_MIN,
+          HUE_MAX,
+          NUMBER_MIN,
+          NUMBER_MAX
+        ),
+      }}>{nextNumber}</div></h2>
       <BoxManager
-        numberOfBoxes={20}
+        NUMBER_OF_BOXES={BOXES}
         nextNumber={nextNumber}
         incrementScore={() => {
           setScore(score + 1);
         }}
         setNextNumber={setNextNumber}
         restartGame={restart}
+        NUMBER_MIN={NUMBER_MIN}
+        NUMBER_MAX={NUMBER_MAX}
+        HUE_MIN={HUE_MIN}
+        HUE_MAX={HUE_MAX}
       ></BoxManager>
     </>
   );
