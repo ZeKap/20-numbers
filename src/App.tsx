@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import { useCookies } from "react-cookie";
 import { getRandomInt } from "./utils/utils";
 import BoxManager from "./components/BoxManager";
 import { calcColor } from "./utils/utils";
@@ -16,8 +15,7 @@ function App() {
     getRandomInt(NUMBER_MIN, NUMBER_MAX)
   );
   const [score, setScore] = React.useState(0);
-  const [cookies, setCookie] = useCookies(["bestScore"]);
-  const [bestScore, setBestScore] = React.useState(cookies["bestScore"] || 0);
+  const [bestScore, setBestScore] = React.useState(Number(localStorage.getItem("bestScore")) || 0);
 
   /**
    * Will restart the game
@@ -25,7 +23,7 @@ function App() {
   function restart(): void {
     if (score > bestScore) {
       setBestScore(score);
-      setCookie("bestScore", score);
+      localStorage.setItem("bestScore", score.toString());
     }
     setScore(0);
   }
