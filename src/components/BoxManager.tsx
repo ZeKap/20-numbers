@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "./Box";
-import { getRandomInt, canPlaceNumber, isSorted } from "../utils/utils";
+import { getRandomInt, canPlaceNumber, isSorted, isEndGame } from "../utils/utils";
 
 function AlreadyUsed(): React.ReactElement {
   return <p style={{ color: "red" }}>This case has already a number</p>;
@@ -31,6 +31,21 @@ function CanNotPlace({
   );
 }
 
+function EndGame({
+  restart,
+}: {
+  restart: CallableFunction;
+}): React.ReactElement {
+  return (
+    <>
+      <h4>You finished! Congartulation!</h4>
+      <button onClick={() => restart()} className="restart_button">
+        Restart the game
+      </button>
+    </>
+  )
+}
+
 export default function BoxManager({
   nextNumber,
   incrementScore,
@@ -58,6 +73,7 @@ export default function BoxManager({
   const [displayAlredyUsed, setDisplayAlreadyUsed] = React.useState(false);
   const [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
   const [displayCanNotPlace, setDisplayCanNotPlace] = React.useState(false);
+  const [displayEndGame, setDisplayEndGame] = React.useState(false);
 
   /**
    * Will generate a new number that's not already in the list
@@ -71,6 +87,7 @@ export default function BoxManager({
     } while (numbers.includes(newNumber));
     setNextNumber(newNumber);
     if (!canPlaceNumber(numbers, newNumber)) {
+      if(isEndGame(numbers)) setDisplayEndGame(true);
       setDisplayCanNotPlace(true);
       return;
     } else setDisplayCanNotPlace(false);
@@ -128,6 +145,7 @@ export default function BoxManager({
     setDisplayAlreadyUsed(false);
     setDisplayCanNotPlace(false);
     setDisplayIsNotSorted(false);
+    setDisplayEndGame(false);
     setNextNumber(getRandomInt(NUMBER_MIN, NUMBER_MAX));
     restartGame();
   }
@@ -151,6 +169,7 @@ export default function BoxManager({
       {displayAlredyUsed && <AlreadyUsed />}
       {displayIsNotSorted && <NotSorted />}
       {displayCanNotPlace && <CanNotPlace restart={restart} />}
+      {displayEndGame && <EndGame restart={restart} />}
     </>
   );
 }
