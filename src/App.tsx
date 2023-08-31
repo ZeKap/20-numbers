@@ -53,15 +53,22 @@ function App() {
         {bestScore !== 0 && <h3>Best score: {bestScore}</h3>}
       </div>
 
-      <h2>Number:<div style={{
-        backgroundColor: calcColor(
-          nextNumber,
-          HUE_MIN,
-          HUE_MAX,
-          NUMBER_MIN,
-          NUMBER_MAX
-        ),
-      }}>{nextNumber}</div></h2>
+      <h2>
+        Number:
+        <div
+          style={{
+            backgroundColor: calcColor(
+              nextNumber,
+              HUE_MIN,
+              HUE_MAX,
+              NUMBER_MIN,
+              NUMBER_MAX
+            ),
+          }}
+        >
+          {nextNumber}
+        </div>
+      </h2>
       <BoxManager
         NUMBER_OF_BOXES={BOXES}
         nextNumber={nextNumber}
@@ -75,6 +82,13 @@ function App() {
         HUE_MIN={HUE_MIN}
         HUE_MAX={HUE_MAX}
       ></BoxManager>
+
+      <footer>
+        <p>
+          Made by <a href="https://github.com/ZeKap/">ZeKap</a> on{" "}
+          <a href="https://github.com/ZeKap/20-numbers">GitHub</a>
+        </p>
+      </footer>
     </>
   );
 }

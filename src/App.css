@@ -7,6 +7,15 @@ body {
   padding: 4rem;
 }
 
+a {
+  color: hsl(220, 50%, 50%);
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+a:hover {
+  font-weight: bold;
+}
+
 h2 {
   display: flex;
   flex-direction: row;
@@ -51,4 +60,11 @@ h2 > * {
   border: solid 0.1rem hsl(220, 10%, 70%);
   background-color: hsl(220, 10%, 95%);
   cursor: pointer;
+}
+
+footer {
+  width: calc(100vw - 2*(4rem));
+  padding: 1rem;
+  position: absolute;
+  bottom: 0;
 }
