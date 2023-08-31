@@ -64,8 +64,17 @@ h2 > * {
 }
 
 footer {
-  width: calc(100vw - 2*(4rem));
-  padding: 1rem;
-  position: absolute;
+  width: 100vw;
+  padding: 0;
+  position: fixed;
   bottom: 0;
+  left: 0;
+  background: hsl(0, 0%, 100%);
+  border: solid 1px hsl(220, 10%, 95%);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0px 0 10px -5px rgba(0,0,0,0.34);
+  -webkit-box-shadow: 0px 0 10px -5px rgba(0,0,0,0.34); 
+}
+footer > p {
+  margin: 0.5rem;
 }
