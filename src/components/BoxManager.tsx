@@ -59,29 +59,28 @@ export default function BoxManager({
   const [displayIsNotSorted, setDisplayIsNotSorted] = React.useState(false);
   const [displayCanNotPlace, setDisplayCanNotPlace] = React.useState(false);
 
-  // TODO
   /**
-   *
-   * @param ns
-   * @returns
+   * Will generate a new number that's not already in the list
+   * @param numbers list of numbers
+   * @returns a new number
    */
-  function generateNewNumber(ns: number[]): void {
-    let n;
+  function generateNewNumber(numbers: number[]): void {
+    let newNumber;
     do {
-      n = getRandomInt(NUMBER_MIN, NUMBER_MAX);
-    } while (ns.includes(n));
-    setNextNumber(n);
-    if (!canPlaceNumber(ns, n)) {
+      newNumber = getRandomInt(NUMBER_MIN, NUMBER_MAX);
+    } while (numbers.includes(newNumber));
+    setNextNumber(newNumber);
+    if (!canPlaceNumber(numbers, newNumber)) {
       setDisplayCanNotPlace(true);
       return;
     } else setDisplayCanNotPlace(false);
   }
 
-  // TODO
   /**
-   *
-   * @param index
-   * @returns
+   * Will handle the click on a case
+   * 
+   * Check if the case is already used, if the list is sorted, and if the number can be placed
+   * @param index index of the case
    */
   function handleCaseClick(index: number) {
     if (displayCanNotPlace) return;
@@ -117,9 +116,12 @@ export default function BoxManager({
     generateNewNumber(n);
   }
 
-  // TODO
   /**
-   *
+   * Will restart the game
+   * 
+   * Reset the list, the score, and get a new random number
+   * 
+   * Then call the restartGame function that save in the cookies the best score
    */
   function restart() {
     setNumbers(Array(NUMBER_OF_BOXES).fill(null));

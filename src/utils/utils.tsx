@@ -1,20 +1,18 @@
 import { Property } from "csstype";
 
-// TODO
 /**
- *
+ * Will return a new random number between 0 and max, as an integer
  * @param max max number to get
- * @returns a new random number between 0 and max, as an integer
+ * @returns a random number
  */
 export function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * max + min);
 }
 
-// TODO
 /**
- *
+ * Will check if the list is sorted
  * @param numbers list of number to check
- * @returns true if the list is sorted, false otherwise
+ * @returns boolean
  */
 export function isSorted(numbers: number[]): boolean {
   let sorted = true;
